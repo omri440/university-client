@@ -1,0 +1,24 @@
+<div class="student-form">
+  <h2>Add New Student</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label>Full Name:</label>
+      <input formControlName="fullName" type="text" />
+    </div>
+
+    <div class="form-group">
+      <label>Email:</label>
+      <input formControlName="email" type="email" />
+    </div>
+
+    <div class="form-group">
+      <label>Birth Date:</label>
+      <input formControlName="birthDate" type="date" />
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">Add Student</button>
+  </form>
+
+  <p class="message">{{ message }}</p>
+</div>

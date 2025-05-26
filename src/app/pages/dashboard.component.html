@@ -1,0 +1,52 @@
+<div *ngIf="currentUser$ | async as u" class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Welcome, {{ u.user.username }}!</h1>
+    <p>Role: {{ u.user.role }}</p>
+  </header>
+<app-student-form (studentAdded)="reloadStats()"></app-student-form>
+  <section class="stats-cards">
+    <div *ngFor="let card of statsCards" class="card" [style.background-color]="card.color">
+      <div class="icon">{{ card.icon }}</div>
+      <div class="details">
+        <h3>{{ card.title }}</h3>
+        <h3>{{ card.title }}</h3>
+        <p>{{ card.value }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="recent-activity">
+    <h2>Recent Activity</h2>
+    <ul>
+      <li *ngFor="let activity of recentActivity">{{ activity }}</li>
+    </ul>
+  </section>
+
+  <section class="quick-actions">
+    <h2>Quick Actions</h2>
+    <ul>
+      <li *ngFor="let action of quickActions">{{ action }}</li>
+    </ul>
+  </section>
+  <section class="students-table" *ngIf="students.length > 0">
+  <h2>Student List</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Birth Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+        <td>{{ student.id }}</td>
+        <td>{{ student.fullName }}</td>
+        <td>{{ student.email }}</td>
+        <td>{{ student.birthDate }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+</div>
