@@ -1,52 +1,83 @@
+<app-navbar></app-navbar>
+
 <div *ngIf="currentUser$ | async as u" class="dashboard-container">
-  <header class="dashboard-header">
-    <h1>Welcome, {{ u.user.username }}!</h1>
-    <p>Role: {{ u.user.role }}</p>
-  </header>
-<app-student-form (studentAdded)="reloadStats()"></app-student-form>
-  <section class="stats-cards">
-    <div *ngFor="let card of statsCards" class="card" [style.background-color]="card.color">
-      <div class="icon">{{ card.icon }}</div>
-      <div class="details">
-        <h3>{{ card.title }}</h3>
-        <h3>{{ card.title }}</h3>
-        <p>{{ card.value }}</p>
+
+  <mat-card class="dashboard-header" appearance="outlined">
+    <mat-card-title>Welcome, {{ u.user.username }}!</mat-card-title>
+    <mat-card-subtitle>Role: {{ u.user.role }}</mat-card-subtitle>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="section-card">
+    <mat-card-title>Add New Student</mat-card-title>
+    <mat-card-content>
+      <app-student-form (studentAdded)="reloadStats()"></app-student-form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="section-card">
+    <mat-card-title>Statistics</mat-card-title>
+    <mat-card-content>
+      <div class="stats-cards">
+        <mat-card *ngFor="let card of statsCards" class="stat-card" appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ card.title }}</mat-card-title>
+            <mat-card-subtitle>{{ card.icon }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p style="font-size: 1.5rem; font-weight: bold;">{{ card.value }}</p>
+          </mat-card-content>
+        </mat-card>
       </div>
-    </div>
-  </section>
+    </mat-card-content>
+  </mat-card>
 
-  <section class="recent-activity">
-    <h2>Recent Activity</h2>
-    <ul>
-      <li *ngFor="let activity of recentActivity">{{ activity }}</li>
-    </ul>
-  </section>
+  <mat-card appearance="outlined" class="section-card">
+    <mat-card-title>Recent Activity</mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let activity of recentActivity">
+          <mat-icon matListIcon>info</mat-icon>
+          <p matLine>{{ activity }}</p>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
 
-  <section class="quick-actions">
-    <h2>Quick Actions</h2>
-    <ul>
-      <li *ngFor="let action of quickActions">{{ action }}</li>
-    </ul>
-  </section>
-  <section class="students-table" *ngIf="students.length > 0">
-  <h2>Student List</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Full Name</th>
-        <th>Email</th>
-        <th>Birth Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let student of students">
-        <td>{{ student.id }}</td>
-        <td>{{ student.fullName }}</td>
-        <td>{{ student.email }}</td>
-        <td>{{ student.birthDate }}</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
+  <mat-card appearance="outlined" class="section-card">
+    <mat-card-title>Quick Actions</mat-card-title>
+    <mat-card-content> 
+        <mat-chip *ngFor="let action of quickActions" color="primary" selected>{{ action }}</mat-chip>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="students.length > 0" appearance="outlined" class="section-card">
+    <mat-card-title>Student List</mat-card-title>
+    <mat-card-content>
+      <table mat-table [dataSource]="students" class="mat-elevation-z1 full-width-table" >
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let student"> {{student.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fullName">
+          <th mat-header-cell *matHeaderCellDef> Full Name </th>
+          <td mat-cell *matCellDef="let student"> {{student.fullName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let student"> {{student.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="birthDate">
+          <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+          <td mat-cell *matCellDef="let student"> {{student.birthDate}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['id', 'fullName', 'email', 'birthDate']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['id', 'fullName', 'email', 'birthDate']"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
 </div>

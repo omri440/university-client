@@ -1,0 +1,27 @@
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.nav-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-left: 8px;
+}
+
+mat-toolbar {
+  background: #3f51b5;
+  color: white;
+}
+
+a[mat-button] {
+  color: white;
+  text-decoration: none;
+
+  &.active-link {
+    border-bottom: 2px solid white;
+  }
+}

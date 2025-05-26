@@ -31,7 +31,7 @@ export class LoginComponent {
 
   try {
     await this.auth.login({ username, password }).toPromise();
-    this.router.navigate(['/']); // הפניה לדשבורד
+    this.router.navigate(['/dashboard']); // הפניה לדשבורד
   } catch (error) {
     console.error('Login failed:', error);
     // תוכל גם להוסיף כאן הודעת שגיאה למשתמש

@@ -4,12 +4,32 @@ import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { firstValueFrom, take } from 'rxjs';
+
 import { StudentFormComponent } from "./student-form/student-form.component";
+import { NavbarComponent } from "../components/navbar/navbar.component";
+
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, StudentFormComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    StudentFormComponent,
+    NavbarComponent,
+    MatCardModule,
+    MatIconModule,
+    MatListModule,
+    MatChipsModule,
+    MatTableModule,
+    MatButtonModule
+  ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -86,13 +106,13 @@ export class DashboardComponent implements OnInit {
     }
   }
 
- reloadStats(): void {
-  this.auth.currentUser$.pipe(take(1)).subscribe(wrapper => {
-    const user = wrapper?.user;
-    if (!user?.role || !user?.id) return;
-    this.loadStats(user.role, user.id);
-  });
-}
+  reloadStats(): void {
+    this.auth.currentUser$.pipe(take(1)).subscribe(wrapper => {
+      const user = wrapper?.user;
+      if (!user?.role || !user?.id) return;
+      this.loadStats(user.role, user.id);
+    });
+  }
 
   private async loadStats(role: string, id: number): Promise<void> {
     const upper = role.toUpperCase();
